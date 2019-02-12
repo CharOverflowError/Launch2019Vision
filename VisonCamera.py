@@ -10,13 +10,14 @@ class VisionCamera:
         self.lower = [0, 0, 0]
         self.upper = [255, 255, 255]
 
-        thread = Thread(target=self.process_stream)
-        thread.run()
+        # thread = Thread(target=self.process_stream)
+        # thread.run()
+
+        self.process_stream()
 
     def process_stream(self):
-        self.capture = cv2.VideoCapture(self.num)
 
-        self.capture.set(cv2.CAP_PROP_AUTO_EXPOSURE, 0.25)  # Set the brightness of the camera
+        self.capture = cv2.VideoCapture(self.num)
 
         # Read until video is completed
         while (self.capture.isOpened()):
@@ -39,7 +40,7 @@ class VisionCamera:
                 masked = cv2.bitwise_and(frame, frame, mask=frame_threshold)
 
                 # Display the resulting masked image
-                cv2.imshow('Masked', masked)
+                cv2.imshow('Masked', frame)
 
                 # Press Q on keyboard to  exit
                 if cv2.waitKey(25) & 0xFF == ord('q'):

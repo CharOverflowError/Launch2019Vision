@@ -1,0 +1,40 @@
+<html>
+    <head>
+      <title>Video Streaming Demonstration</title>
+    </head>
+    <body onload="cookieParse()">
+        <form method="POST">
+            <div>
+                    <input type="range" id="H_MIN" name="H_MIN" min="0" max="255">
+                    <label for="H_MIN">H_MIN</label>
+                </div>
+                <div>
+                    <input type="range" id="H_MAX" name="H_MAX" min="0" max="255">
+                    <label for="H_MAX">H_MAX</label>
+                </div>
+                <div>
+                    <input type="range" id="S_MIN" name="S_MIN" min="0" max="255">
+                    <label for="S_MIN">S_MIN</label>
+                </div>
+                <div>
+                    <input type="range" id="S_MAX" name="S_MAX" min="0" max="255">
+                    <label for="S_MAX">S_MAX</label>
+                </div>
+                <div>
+                    <input type="range" id="V_MIN" name="V_MIN" min="0" max="255">
+                    <label for="V_MIN">V_MIN</label>
+                </div>
+                <div>
+                    <input type="range" id="V_MAX" name="V_MAX" min="0" max="255">
+                    <label for="V_MAX">V_MAX</label>
+                </div>
+                <input type="submit" value="Submit">
+        </form>
+        
+        <br>
+        <br>
+
+        <img id="bg" src="http://localhost:5000/video_feed">
+    </body>
+    <script type="text/javascript" src="{{ url_for('static', filename='ParseCookies.js') }}"></script>
+  </html>
