@@ -2,12 +2,10 @@ from flask import Flask, render_template, Response, request, redirect, url_for, 
 
 app = Flask(__name__)
 
-camera = None
-contourProcessor = None
-
 def setCamera(cam):
     global camera
     camera = cam
+    print(camera)
 
 def setContourProcessor(contourProc):
     global contourProcessor
@@ -15,12 +13,13 @@ def setContourProcessor(contourProc):
 
 @app.route('/')
 def index():
-    h_min = request.cookies.get('H_MIN')
-    h_max = request.cookies.get('H_MAX')
-    s_min = request.cookies.get('S_MIN')
-    s_max = request.cookies.get('S_MAX')
-    v_min = request.cookies.get('V_MIN')
-    v_max = request.cookies.get('V_MAX')
+    if ('H_MIN') in request.cookies:
+        h_min = request.cookies.get('H_MIN')
+        h_max = request.cookies.get('H_MAX')
+        s_min = request.cookies.get('S_MIN')
+        s_max = request.cookies.get('S_MAX')
+        v_min = request.cookies.get('V_MIN')
+        v_max = request.cookies.get('V_MAX')
 
     return render_template('index.html')
 
@@ -59,16 +58,16 @@ def HSV_post():
     return resp
 
 
-def gen(camera):
+def gen():
     while True:
-        frame = camera.getMJPEG()
+        frame = camera.getMJPEGProcessedFrame()
         yield (b'--frame\r\n'
             b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
 
 @app.route('/video_feed')
 def video_feed():
-    return Response(gen(camera),
+    return Response(gen(),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
 def run():
-    app.run(host='localhost', debug=True)
+    app.run(host='localhost', debug=False)
