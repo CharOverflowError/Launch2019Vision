@@ -2,6 +2,8 @@ import cv2
 import os
 import numpy as np
 from threading import Thread
+from PIL import Image
+import io
 
 class Camera:
     def __init__(self, port):
@@ -12,13 +14,9 @@ class Camera:
         self.latestFrame[:,320:640] = (0,255,0)
         self.latestProcessedFrame = np.zeros([480,640,3], dtype=np.uint8) #  Create empty frame
 
-    def getMJPEGRawFrame(self):
-        ret, jpeg = cv2.imencode('.jpg', self.latestFrame)
-        if ret:
-            return jpeg.tobytes()
-
     def getMJPEGProcessedFrame(self):
-        ret, jpeg = cv2.imencode('.jpg', self.latestProcessedFrame)
+        param = [int(cv2.IMWRITE_JPEG_QUALITY), 15]
+        ret, jpeg = cv2.imencode('.jpg', self.latestProcessedFrame, param)
         if ret:
             return jpeg.tobytes()
 

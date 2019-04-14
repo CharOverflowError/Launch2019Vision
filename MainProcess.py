@@ -7,7 +7,7 @@ import VideoStreamer
 from threading import Thread
 
 
-camera = Camera(0)
+camera = Camera(1)
 contourProc = ContourProcessor()
 targetFinder = TargetFinder()
 

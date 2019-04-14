@@ -6,26 +6,32 @@ function cookieParse() {
     var V_MIN_SLIDER = document.getElementById("V_MIN");
     var V_MAX_SLIDER = document.getElementById("V_MAX");
 
-    var cookieParse = document.cookie.split("=");
+    var cookieParse = document.cookie.split("; ");
 
     if (cookieParse.length > 0) {
-        var HSVBounds = [];
-        for (var i=1; i < cookieParse.length; i++) {
-            HSVBounds.push(cookieParse[i].split("; ")[0]);
+        for (var i=0; i < cookieParse.length; i++) {
+            cookieParse[i] = cookieParse[i].split("=");
+            
+            switch (cookieParse[i][0]) {
+                case "H_MIN":
+                    H_MIN_SLIDER.value = cookieParse[i][1];
+                    break;
+                case "H_MAX":
+                    H_MAX_SLIDER.value = cookieParse[i][1];
+                    break;
+                case "V_MIN":
+                    V_MIN_SLIDER.value = cookieParse[i][1];
+                    break;
+                case "V_MAX":
+                    V_MAX_SLIDER.value = cookieParse[i][1];
+                    break;
+                case "S_MIN":
+                    S_MIN_SLIDER.value = cookieParse[i][1];
+                    break;
+                case "S_MAX":
+                    S_MAX_SLIDER.value = cookieParse[i][1];
+                    break;
+            }
         }
-
-        h_min = HSVBounds[0];
-        h_max = HSVBounds[1];
-        s_min = HSVBounds[2];
-        s_max = HSVBounds[3];
-        v_min = HSVBounds[4];
-        v_max = HSVBounds[5];
-
-        H_MIN_SLIDER.value = h_min;
-        H_MAX_SLIDER.value = h_max;
-        S_MIN_SLIDER.value = s_min;
-        S_MAX_SLIDER.value = s_max;
-        V_MIN_SLIDER.value = v_min;
-        V_MAX_SLIDER.value = v_max;
     }
 };
